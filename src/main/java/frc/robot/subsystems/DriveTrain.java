@@ -14,9 +14,11 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModule;
@@ -36,14 +38,14 @@ public class DriveTrain extends SubsystemBase {
 
   private final Pigeon2 imu = new Pigeon2(DriveConstants.IMU_ID);
 
-  private VisionSubsystem m_vision = new VisionSubsystem(this); 
+  private VisionSubsystem m_vision = new VisionSubsystem(this);  
 
   //Just in case :)
-  /*private SwerveDriveOdometry encoderOdo = 
+  private SwerveDriveOdometry encoderOdo = 
   new SwerveDriveOdometry(
     DriveConstants.kSwerveKinematics, 
     getRotation2d(), 
-    getModulePositions());*/
+    getModulePositions());
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
@@ -55,7 +57,7 @@ public class DriveTrain extends SubsystemBase {
     }).start();
 
     AutoBuilder.configureHolonomic(
-      () -> m_vision.estimatedPose2d(),
+      () -> encoderOdo.getPoseMeters(),
       this::resetOdometryPose, 
       () -> getRobotRelativeSpeeds(), 
       this::setRobotRelativeSpeeds, 
@@ -86,6 +88,8 @@ public class DriveTrain extends SubsystemBase {
        swerveModules[mod.moduleNumber].getDriveVelocity());
     }
 
+    encoderOdo.update(getRotation2d(), getModulePositions());
+
     /*for(SwerveModule mod : swerveModules){
       SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Absolute Volts", 
       swerveModules[mod.moduleNumber].getRawAbsoluteVolts());
@@ -95,6 +99,8 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("Odometry Y", m_vision.estimatedPose2d().getY());
     SmartDashboard.putNumber("Odometry Rotation", 
                             m_vision.estimatedPose2d().getRotation().getDegrees());
+
+    //SmartDashboard.putDa
 
     SmartDashboard.putNumber("IMU Angle", getHeading());  
   
@@ -171,7 +177,8 @@ public class DriveTrain extends SubsystemBase {
   }
   
   public void resetOdometryPose(Pose2d pose){
-    m_vision.resetPoseEstimator(pose);
+    encoderOdo.resetPosition(getRotation2d(), getModulePositions(), pose);
+    //m_vision.resetPoseEstimator(pose);
   }
 
   //Debug

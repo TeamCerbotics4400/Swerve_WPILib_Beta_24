@@ -5,5 +5,7 @@
   "pathFolders": [
     "PID Tuning"
   ],
-  "autoFolders": []
+  "autoFolders": [
+    "PID Tuning"
+  ]
 }

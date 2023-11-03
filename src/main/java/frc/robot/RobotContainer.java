@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -51,25 +52,19 @@ public class RobotContainer {
 
   private final NodeSelector m_selector = new NodeSelector(subsystemsDriver);
 
-  private final SendableChooser<String> m_autoChooser = new SendableChooser<>();
-  private final String m_DefaultAuto = "NO AUTO";
-  private String m_selectedAuto;
-  private final String[] m_autoNames = {"NO AUTO", "DRIVE TUNER", "ROTATION TUNER"};
+  //private final SendableChooser<Command> m_autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    m_autoChooser.setDefaultOption("No Auto", m_DefaultAuto);
-    m_autoChooser.addOption("Drive Tuner", m_autoNames[1]);
-    m_autoChooser.addOption("Rotation Tuner", m_autoNames[2]);
-    
-    SmartDashboard.putData("Auto Choices", m_autoChooser);
-
     NamedCommands.registerCommand("ArmIdle", new IdleArm(m_arm, m_wrist));
     NamedCommands.registerCommand("ArmIntake", new ArmIntake(m_arm, m_wrist, m_shooter));
     NamedCommands.registerCommand("ArmShoot", 
                                           new ArmShoot(m_arm, m_wrist, m_shooter, m_selector));
 
+    //m_autoChooser = AutoBuilder.buildAutoChooser();
+
+    //SmartDashboard.putData("Auto Chooser", m_autoChooser);
 
     m_drive.setDefaultCommand(new TeleopControl
     (m_drive, 
@@ -152,26 +147,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    String autoSelected = null;
-    m_selectedAuto = m_autoChooser.getSelected();
-    
-    System.out.println("Auto seleted:" + m_selectedAuto);
-
-    switch(m_selectedAuto){
-      case "NO AUTO":
-        autoSelected = null;
-      break;
-      
-      case "DRIVE TUNER":
-        autoSelected = "DrivePID";
-      break;
-      
-      case "ROTATION TUNER":
-        autoSelected = "RotationPID";
-      break;
-    }
-
-    return new PathPlannerAuto("DrivePID");
+    return new PathPlannerAuto("Straight PID Tuner");//m_autoChooser.getSelected();
   }
 
   public DriveTrain getDrive(){
