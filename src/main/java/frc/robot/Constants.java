@@ -164,7 +164,7 @@ public final class Constants {
 
     public static final double traslationP = 0.0,
                                traslationD = 0.0,
-                               rotationP = 0.0,
+                               rotationP = 2.0,//1.80,
                                rotationD = 0.0;
   }
 

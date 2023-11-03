@@ -3,7 +3,7 @@
   "startingPose": {
     "position": {
       "x": 6.61,
-      "y": 5.57
+      "y": 6.0
     },
     "rotation": 0
   },
@@ -20,13 +20,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 1.2
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "StraightPID"
+            "pathName": "TurnPID"
           }
         }
       ]

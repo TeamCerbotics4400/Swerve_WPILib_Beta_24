@@ -2,29 +2,35 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 2,
-      "y": 2
+      "x": 7.4,
+      "y": 4.94
     },
-    "rotation": 0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Circuit1"
+            "name": "ArmIdle"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Circuit2"
+            "pathName": "Square"
           }
         }
       ]
     }
   },
-  "folder": null
+  "folder": "PID Tuning"
 }

@@ -147,7 +147,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new PathPlannerAuto("Straight PID Tuner");//m_autoChooser.getSelected();
+    return new PathPlannerAuto("Square Auto");//m_autoChooser.getSelected();
   }
 
   public DriveTrain getDrive(){

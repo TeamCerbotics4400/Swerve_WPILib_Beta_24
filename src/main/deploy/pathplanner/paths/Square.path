@@ -71,18 +71,31 @@
       "isLocked": false
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.55,
+      "rotationDegrees": -90.0
+    },
+    {
+      "waypointRelativePos": 2.3,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 3.35,
+      "rotationDegrees": 135.0
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3,
-    "maxAcceleration": 3,
-    "maxAngularVelocity": 540,
-    "maxAngularAcceleration": 720
+    "maxVelocity": 1.5,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": "PID Tuning",

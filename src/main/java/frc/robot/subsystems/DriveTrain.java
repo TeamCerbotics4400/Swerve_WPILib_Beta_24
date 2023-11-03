@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.PathPlannerTrajectory;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -176,8 +178,8 @@ public class DriveTrain extends SubsystemBase {
     m_vision.setAlliance(alliance);
   }
   
-  public void resetOdometryPose(Pose2d pose){
-    encoderOdo.resetPosition(getRotation2d(), getModulePositions(), pose);
+  public void resetOdometryPose(Pose2d initPose){
+    encoderOdo.resetPosition(getRotation2d(), getModulePositions(), initPose);
     //m_vision.resetPoseEstimator(pose);
   }
 
