@@ -92,11 +92,6 @@ public class DriveTrain extends SubsystemBase {
 
     encoderOdo.update(getRotation2d(), getModulePositions());
 
-    /*for(SwerveModule mod : swerveModules){
-      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Absolute Volts", 
-      swerveModules[mod.moduleNumber].getRawAbsoluteVolts());
-    }*/
-
     SmartDashboard.putNumber("Odometry X", m_vision.estimatedPose2d().getX());
     SmartDashboard.putNumber("Odometry Y", m_vision.estimatedPose2d().getY());
     SmartDashboard.putNumber("Odometry Rotation", 
