@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.util.PathPlannerLogging;
-
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
