@@ -1,0 +1,36 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.8042179595809578,
+      "y": 4.752640344975347
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score One"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score second"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score third"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Competition Auto"
+}

@@ -24,7 +24,6 @@ import frc.robot.commands.StateShooterCommand;
 import frc.robot.commands.AutoCommands.ArmIntake;
 import frc.robot.commands.AutoCommands.ArmShoot;
 import frc.robot.commands.AutoCommands.IdleArm;
-//import frc.robot.commands.DebugCommands.PIDModuleTuner;
 import frc.robot.commands.TeleopCommands.TeleopControl;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrain;
@@ -52,8 +51,6 @@ public class RobotContainer {
 
   private final NodeSelector m_selector = new NodeSelector(subsystemsDriver);
 
-  //private final SendableChooser<Command> m_autoChooser;
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -61,10 +58,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("ArmIntake", new ArmIntake(m_arm, m_wrist, m_shooter));
     NamedCommands.registerCommand("ArmShoot", 
                                           new ArmShoot(m_arm, m_wrist, m_shooter, m_selector));
-
-    //m_autoChooser = AutoBuilder.buildAutoChooser();
-
-    //SmartDashboard.putData("Auto Chooser", m_autoChooser);
 
     m_drive.setDefaultCommand(new TeleopControl
     (m_drive, 
@@ -147,7 +140,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new PathPlannerAuto("Square Auto");//m_autoChooser.getSelected();
+    return new PathPlannerAuto("ThreePiece");
   }
 
   public DriveTrain getDrive(){

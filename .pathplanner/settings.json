@@ -1,12 +1,18 @@
 {
-  "robotWidth": 0.9,
-  "robotLength": 0.9,
+  "robotWidth": 0.5842,
+  "robotLength": 0.6604,
   "holonomicMode": true,
   "pathFolders": [
     "Fun Autos",
+    "Competition Paths",
     "PID Tuning"
   ],
   "autoFolders": [
+    "Competition Auto",
     "PID Tuning"
-  ]
+  ],
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 3.0,
+  "defaultMaxAngVel": 540.0,
+  "defaultMaxAngAccel": 720.0
 }

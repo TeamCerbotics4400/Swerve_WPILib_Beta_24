@@ -1,0 +1,133 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.8042179595809578,
+        "y": 4.752640344975347
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.732308670724212,
+        "y": 4.783236742046004
+      },
+      "isLocked": false
+    },
+    {
+      "anchor": {
+        "x": 6.720039088933139,
+        "y": 4.620055957669168
+      },
+      "prevControl": {
+        "x": 7.03620185866326,
+        "y": 4.579260761574959
+      },
+      "nextControl": {
+        "x": 6.486517492918939,
+        "y": 4.65018777650971
+      },
+      "isLocked": false
+    },
+    {
+      "anchor": {
+        "x": 4.272327323280601,
+        "y": 4.620055957669168
+      },
+      "prevControl": {
+        "x": 5.006640852976363,
+        "y": 4.5996583596220635
+      },
+      "nextControl": {
+        "x": 3.6904156270980115,
+        "y": 4.636220171452018
+      },
+      "isLocked": false
+    },
+    {
+      "anchor": {
+        "x": 1.75,
+        "y": 4.395682379151018
+      },
+      "prevControl": {
+        "x": 2.74948230430812,
+        "y": 4.579260761574959
+      },
+      "nextControl": null,
+      "isLocked": false
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Start Intaking",
+      "waypointRelativePos": 0.25,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ArmIntake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Idle Intake",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ArmIdle"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Score Piece",
+      "waypointRelativePos": 3.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ArmShoot"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 2.5
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0
+  },
+  "reversed": false,
+  "folder": "Competition Paths",
+  "previewStartingState": null
+}
