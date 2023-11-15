@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.75,
+        "x": 1.8,
         "y": 2.7026817412413466
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8042179595809578,
+        "x": 1.8542179595809578,
         "y": 2.151946593969525
       },
       "isLocked": false
@@ -89,7 +89,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.9,
-      "rotationDegrees": 0
+      "rotationDegrees": 0.0
     },
     {
       "waypointRelativePos": 3.2,
@@ -123,24 +123,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.9500000000000002,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "ArmIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 3.15,
+      "waypointRelativePos": 0,
       "command": {
         "type": "sequential",
         "data": {
@@ -154,42 +137,22 @@
           ]
         }
       }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 5.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "ArmShoot"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 2.5
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Competition Paths",
-  "previewStartingState": null
+  "previewStartingState": {
+    "rotation": 180.0,
+    "velocity": 0
+  }
 }

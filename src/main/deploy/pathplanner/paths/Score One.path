@@ -56,31 +56,19 @@
       "isLocked": false
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.3,
+      "rotationDegrees": 0
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Start Intaking",
-      "waypointRelativePos": 0.25,
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
       "command": {
         "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "ArmIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Idle Intake",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "parallel",
         "data": {
           "commands": [
             {
@@ -92,42 +80,22 @@
           ]
         }
       }
-    },
-    {
-      "name": "Score Piece",
-      "waypointRelativePos": 3.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "ArmShoot"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 2.5
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Competition Paths",
-  "previewStartingState": null
+  "previewStartingState": {
+    "rotation": 180.0,
+    "velocity": 0
+  }
 }
