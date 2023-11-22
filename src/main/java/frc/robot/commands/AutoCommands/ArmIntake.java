@@ -30,8 +30,8 @@ public class ArmIntake extends ParallelCommandGroup {
     this.m_shooter = m_shooter;
 
     addCommands(
-      m_arm.goToPosition(ArmConstants.BACK_FLOOR_POSITION),
-      m_wrist.goToPosition(WristConstants.RIGHT_POSITION),
+      m_arm.goToPosition(ArmConstants.FRONT_FLOOR_POSITION),
+      m_wrist.goToPosition(WristConstants.LEFT_POSITION),
       new StateIntake(m_shooter, m_arm, IntakeState.INTAKING));
   }
 }

@@ -46,6 +46,10 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
               ArmConstants.kMaxVelocityRadPerSecond,
               ArmConstants.kMaxAccelerationMetersPerSecondSquared)));
 
+    m_encoder.setDistancePerRotation(-360.0);
+
+    setGoal(90.3);
+
     leftMotor.restoreFactoryDefaults();
     rightMotor.restoreFactoryDefaults();
 
@@ -58,13 +62,6 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
 
     leftMotor.setCANTimeout(0);
     rightMotor.setCANTimeout(0);
-    
-
-    m_encoder.setDistancePerRotation(-360.0);
-
-    //m_encoder.reset();
-
-    setGoal(90.3);
   }
 
   @Override

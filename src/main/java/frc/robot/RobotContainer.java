@@ -58,6 +58,14 @@ public class RobotContainer {
     NamedCommands.registerCommand("ArmIntake", new ArmIntake(m_arm, m_wrist, m_shooter));
     NamedCommands.registerCommand("ArmShoot", 
                                           new ArmShoot(m_arm, m_wrist, m_shooter, m_selector));
+    NamedCommands.registerCommand("SelectLow", 
+                            new InstantCommand(() -> m_selector.selectLevel(0)));
+    NamedCommands.registerCommand("SelectMid", 
+                            new InstantCommand(() -> m_selector.selectLevel(1)));
+    NamedCommands.registerCommand("SelectHigh", 
+                            new InstantCommand(() -> m_selector.selectLevel(2)));
+    NamedCommands.registerCommand("SelectMaria", 
+                            new InstantCommand(() -> m_selector.selectLevel(3)));
 
     m_drive.setDefaultCommand(new TeleopControl
     (m_drive, 
