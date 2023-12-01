@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.MatBuilder;
 import edu.wpi.first.math.Nat;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
@@ -134,24 +133,6 @@ public class VisionSubsystem {
     m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
   }
 
-  public void dynamicVisionDvs(){
-    double xyStds = 0;
-    double degStds = 0;
-    if(getNumofDetectedTargets() >= 2 && poseDebouncer.calculate(areTagsatGoodRange())){
-      xyStds = 0.1;
-      degStds = 0.1;
-    } else if(LimelightHelpers.getTA(VisionConstants.tagLimelightName) >= 0.5 && poseDebouncer.calculate(areTagsatGoodRange())){
-      xyStds = 0.5;
-      degStds = 0.5;
-    } else if(LimelightHelpers.getTA(VisionConstants.tagLimelightName) >= 0.1 && poseDebouncer.calculate(areTagsatGoodRange())){
-      xyStds = 1.2;
-      degStds = 1.2;
-    }
-
-    m_poseEstimator.setVisionMeasurementStdDevs(
-                  VecBuilder.fill(xyStds, xyStds, degStds));
-  }
-
   //The rejection method in question
   public boolean areTagsatGoodRange(){
     boolean goodRange = false;
@@ -191,41 +172,23 @@ public class VisionSubsystem {
   }
 
   public void setDynamicVisionStdDevs(){
-    if(getNumofDetectedTargets() <= 2){
-      m_poseEstimator.setVisionMeasurementStdDevs(new 
-                                MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1, 0.1, 0.1));
-    } else {
-      if(LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.tagLimelightName).getX() <= 2.5){
-        m_poseEstimator.setVisionMeasurementStdDevs(new 
-                                MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1, 0.1, 0.1));
-      } else if(LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.tagLimelightName).getX() >= 2.5 
-          && LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.tagLimelightName).getX() <= 3.5){
-            m_poseEstimator.setVisionMeasurementStdDevs(new 
-            MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.3, 0.3, 0.3));
-      } else if(LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.tagLimelightName).getX() >= 2.5 
-      && LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.tagLimelightName).getX() <= 3.5){
-        m_poseEstimator.setVisionMeasurementStdDevs(new 
-            MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.7, 0.7, 0.7));
-      } else {
-        m_poseEstimator.setVisionMeasurementStdDevs(new 
-            MatBuilder<>(Nat.N3(), Nat.N1()).fill(1.0, 1.0, 1.0));
-      }
-    }
-  }
+    int numDetectedTargets = getNumofDetectedTargets();
+    double xValue = LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.tagLimelightName).getX();
+    double stdsDev = 0.0;
 
-  /*public void positionState(){
-    if(DriverStation.isTeleop()){
-      if(m_poseEstimator.getEstimatedPosition().getY() <= 1.45){
-        StateMachines.setPositionState(PositionState.CABLE);
-      } else if(m_poseEstimator.getEstimatedPosition().getY() >= 4.0){
-        StateMachines.setPositionState(PositionState.LOADING);
-      } else {
-        StateMachines.setPositionState(PositionState.MIDDLE);
-      }
+    if(numDetectedTargets <= 2 || xValue <= 2.5){
+      stdsDev = 0.1;
+    } else if(xValue >= 2.5 && xValue <= 3.5){
+      stdsDev = 0.3;
+    } else if(xValue > 3.5 && xValue <= 4.5) {
+      stdsDev = 0.7;
     } else {
-      StateMachines.setPositionState(PositionState.TELE);
+      stdsDev = 1.0;
     }
-  }*/
+
+    m_poseEstimator.setVisionMeasurementStdDevs(
+                        new MatBuilder<>(Nat.N3(), Nat.N1()).fill(stdsDev, stdsDev, stdsDev));
+  }
 
   public int getNumofDetectedTargets(){
     return LimelightHelpers
