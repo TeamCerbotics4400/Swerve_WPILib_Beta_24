@@ -47,7 +47,7 @@ public class SwerveModule {
     private Rotation2d lastAngle;
     
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
-
+        
         this.moduleNumber = moduleNumber;
 
         driveMotor = new CANSparkMax(moduleConstants.driveMotorID, MotorType.kBrushless);
@@ -82,6 +82,9 @@ public class SwerveModule {
 
         turnController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnController.enableContinuousInput(-Math.PI, Math.PI);
+
+        driveMotor.setCANTimeout(0);
+        turnMotor.setCANTimeout(0);
 
         Timer.delay(1.0);
         resetEncoders();
@@ -132,7 +135,6 @@ public class SwerveModule {
 
         desiredState = 
             RevModuleOptimizer.optimize(desiredState, getState().angle);
-
 
         setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop);  

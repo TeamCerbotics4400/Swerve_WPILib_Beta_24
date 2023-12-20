@@ -4,9 +4,15 @@
 
 package frc.robot;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import team4400.Util.Swerve.SwerveModuleConstants;
 
 /**
@@ -250,6 +256,44 @@ public final class Constants {
                             midAlign_Pipeline = 2,
                             highAlign_Pipeline = 3;
 
+  }
+
+  public static final class FieldConstants{
+    public static final double fieldLength = 16.54175;
+    public static final double fieldWidth = 8.0137;
+
+    public static final Map<String, Pose2d> BLUE_MAP = Map.ofEntries(
+            Map.entry("Node 1 Cone", new Pose2d(new Translation2d(1.83, 0.42), Rotation2d.fromDegrees(180))),
+            Map.entry("Node 2 Cube", new Pose2d(new Translation2d(1.83, 1.06), Rotation2d.fromDegrees(180))),
+            Map.entry("Node 3 Cone", new Pose2d(new Translation2d(1.83, 1.59), Rotation2d.fromDegrees(180))),
+            Map.entry("Node 4 Cone", new Pose2d(new Translation2d(1.83, 2.19), Rotation2d.fromDegrees(180))),
+            Map.entry("Node 5 Cube", new Pose2d(new Translation2d(1.83, 2.75), Rotation2d.fromDegrees(180))),
+            Map.entry("Node 6 Cone", new Pose2d(new Translation2d(1.83, 3.31), Rotation2d.fromDegrees(180))),
+            Map.entry("Node 7 Cone", new Pose2d(new Translation2d(1.83, 3.86), Rotation2d.fromDegrees(180))),
+            Map.entry("Node 8 Cube", new Pose2d(new Translation2d(1.83, 4.42), Rotation2d.fromDegrees(180))),
+            Map.entry("Node 9 Cone", new Pose2d(new Translation2d(1.83, 4.99), Rotation2d.fromDegrees(180)))
+          );
+
+          private static final Map<String, Pose2d> RED_MAP =
+              BLUE_MAP.entrySet().stream().collect(Collectors.toMap(
+                  entry -> entry.getKey(),
+                  entry -> new Pose2d(
+                      new Translation2d(
+                          entry.getValue().getX(),
+                          fieldWidth - entry.getValue().getY()),
+                      entry.getValue().getRotation())));
+          
+          public static final Map<Alliance, Map<String, Pose2d>> POSE_MAP = Map.of(
+              Alliance.Blue, BLUE_MAP,
+              Alliance.Red, RED_MAP
+          );
+  
+          public static Map<String, Pose2d> getBlueMap(){
+            return BLUE_MAP;
+          }
+          public static Map<String, Pose2d> getRedMap(){
+            return RED_MAP;
+          }
   }
 
   public static final class IOConstants{
