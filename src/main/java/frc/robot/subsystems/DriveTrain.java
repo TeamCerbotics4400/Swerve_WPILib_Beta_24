@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -20,22 +20,22 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.SwerveModule;
+import frc.robot.CTRESwerveModule;
 import frc.robot.Constants.DriveConstants;
 
 public class DriveTrain extends SubsystemBase {
-  public SwerveModule[] swerveModules = new SwerveModule[]{
+  public CTRESwerveModule[] swerveModules = new CTRESwerveModule[]{
     //Left Front Module
-    new SwerveModule(0, DriveConstants.Module0.CONSTANTS),
+    new CTRESwerveModule(0, DriveConstants.Module0.CONSTANTS),
     //Right Front Module
-    new SwerveModule(1, DriveConstants.Module1.CONSTANTS),
+    new CTRESwerveModule(1, DriveConstants.Module1.CONSTANTS),
     //Back Right Module
-    new SwerveModule(2, DriveConstants.Module2.CONSTANTS),
+    new CTRESwerveModule(2, DriveConstants.Module2.CONSTANTS),
     //Back Left Module
-    new SwerveModule(3, DriveConstants.Module3.CONSTANTS)
+    new CTRESwerveModule(3, DriveConstants.Module3.CONSTANTS)
   };
 
-  private final Pigeon2 imu = new Pigeon2(DriveConstants.IMU_ID);
+  private final Pigeon2 imu = new Pigeon2(DriveConstants.IMU_ID, "rio");
 
   private VisionSubsystem m_vision = new VisionSubsystem(this);  
 
@@ -77,12 +77,12 @@ public class DriveTrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    for(SwerveModule mod : swerveModules){
+    for(CTRESwerveModule mod : swerveModules){
       SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Absolute Encoder", 
       swerveModules[mod.moduleNumber].getAngleDeegrees());
     }
 
-    for(SwerveModule mod: swerveModules){
+    for(CTRESwerveModule mod: swerveModules){
       SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Velocity",
        swerveModules[mod.moduleNumber].getDriveVelocity());
     }
@@ -105,17 +105,17 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getHeading(){
-    return Math.IEEEremainder(imu.getYaw(), 360);
+    return Math.IEEEremainder(imu.getYaw().getValueAsDouble(), 360);
   }
 
   public void resetModuleEncoders(){
-    for(SwerveModule mod : swerveModules){
+    for(CTRESwerveModule mod : swerveModules){
       mod.resetEncoders();
     }
   }
 
   public void stopModules(){
-    for(SwerveModule mod : swerveModules){
+    for(CTRESwerveModule mod : swerveModules){
       mod.stop();
     }
   }
@@ -128,14 +128,14 @@ public class DriveTrain extends SubsystemBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(
       desiredStates, 
       DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
-    for(SwerveModule mod : swerveModules){
+    for(CTRESwerveModule mod : swerveModules){
       mod.setDesiredState(desiredStates[mod.moduleNumber], isOpenLoop);
     }
   }
 
   public SwerveModuleState[] getModuleStates(){
     SwerveModuleState[] states = new SwerveModuleState[4];
-    for(SwerveModule mod : swerveModules){
+    for(CTRESwerveModule mod : swerveModules){
       states[mod.moduleNumber] = mod.getState();
     }
     return states;
@@ -143,14 +143,14 @@ public class DriveTrain extends SubsystemBase {
 
   public SwerveModulePosition[] getModulePositions(){
     SwerveModulePosition[] positions = new SwerveModulePosition[4];
-    for(SwerveModule mod : swerveModules){
+    for(CTRESwerveModule mod : swerveModules){
       positions[mod.moduleNumber] = mod.getPosition();
     }
     return positions;
   }
 
   public void lockWheels(){
-    for(SwerveModule mod : swerveModules){
+    for(CTRESwerveModule mod : swerveModules){
       mod.lockModule();
     }
   }
@@ -177,7 +177,7 @@ public class DriveTrain extends SubsystemBase {
 
   //Debug
   public void tuneDrivePID(double speedMtsPerSec){
-    for(SwerveModule mod : swerveModules){
+    for(CTRESwerveModule mod : swerveModules){
       mod.tuneModulePID(speedMtsPerSec);
     }
   }
