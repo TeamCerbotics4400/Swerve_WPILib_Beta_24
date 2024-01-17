@@ -64,12 +64,9 @@ public class VisionSubsystem {
 
     public void periodic(){
         odometryWvision();
-        areTagsatGoodRange();
         setDynamicVisionStdDevs();
 
         SmartDashboard.putString("Alliance", alliance.toString());
-
-        SmartDashboard.putBoolean("Tags good range", poseDebouncer.calculate(areTagsatGoodRange()));
 
         SmartDashboard.putNumber("Num of tags", getNumofDetectedTargets());
     }
@@ -120,7 +117,7 @@ public class VisionSubsystem {
     LimelightHelpers.Results results = 
         LimelightHelpers.getLatestResults(VisionConstants.tagLimelightName).targetingResults;
 
-    if(LimelightHelpers.getTV(VisionConstants.tagLimelightName) && poseDebouncer.calculate(areTagsatGoodRange())){
+    if(LimelightHelpers.getTV(VisionConstants.tagLimelightName)){
       Pose2d camPose = LimelightHelpers.toPose2D(results.botpose_wpiblue);
       m_poseEstimator.addVisionMeasurement(camPose, 
       Timer.getFPGATimestamp() - (results.latency_capture / 1000.0)
@@ -133,61 +130,21 @@ public class VisionSubsystem {
     m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
   }
 
-  //The rejection method in question
-  public boolean areTagsatGoodRange(){
-    boolean goodRange = false;
-    //If Alliance is Blue, use Blue Community
-    if(alliance == Alliance.Blue){
-      if(getNumofDetectedTargets() <= 1){
-        if(LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.tagLimelightName).getX() <= 3.5){
-          goodRange = true;
-        } else {
-          goodRange = false;
-        }
-      } else {
-        if(LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.tagLimelightName).getX() <= 6.0){
-          goodRange = true;
-        } else {
-          goodRange = false;
-        }
-      }
-    //If Alliance is Red, use Red Community
-    } else {
-      if(getNumofDetectedTargets() <= 1){
-        if(LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.tagLimelightName).getX() >= 13.0){
-          goodRange = true;
-        } else {
-          goodRange = false;
-        }
-      } else {
-        if(LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.tagLimelightName).getX() >= 10.50){
-          goodRange = true;
-        } else {
-          goodRange = false;
-        }
-      }
-    } 
-    
-    return goodRange;
-  }
-
   public void setDynamicVisionStdDevs(){
     int numDetectedTargets = getNumofDetectedTargets();
-    double xValue = LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.tagLimelightName).getX();
-    double stdsDev = 0.0;
+    double stdsDevXY = 0.0;
+    double stdsDevDeg = 0.0;
 
-    if(numDetectedTargets <= 2 || xValue <= 2.5){
-      stdsDev = 0.1;
-    } else if(xValue >= 2.5 && xValue <= 3.5){
-      stdsDev = 0.3;
-    } else if(xValue > 3.5 && xValue <= 4.5) {
-      stdsDev = 0.7;
+    if(numDetectedTargets <= 2){
+      stdsDevXY = 0.1;
+      stdsDevDeg = 0.1;
     } else {
-      stdsDev = 1.0;
+      stdsDevXY = m_drive.getAverageDriveSpeed();
+      stdsDevDeg = m_drive.getAngularAcceleration();
     }
 
     m_poseEstimator.setVisionMeasurementStdDevs(
-                        new MatBuilder<>(Nat.N3(), Nat.N1()).fill(stdsDev, stdsDev, stdsDev));
+                        new MatBuilder<>(Nat.N3(), Nat.N1()).fill(stdsDevXY, stdsDevXY, stdsDevDeg));
   }
 
   public int getNumofDetectedTargets(){

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AutoCommands.PathfindAndFollow;
 import frc.robot.commands.TeleopCommands.TeleopControl;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.NodeSelector;
@@ -58,6 +59,8 @@ public class RobotContainer {
   private void configureBindings() {
     new JoystickButton(chassisDriver, 1).onTrue(
       new InstantCommand(() -> m_drive.zeroHeading()));
+
+    new JoystickButton(chassisDriver, 2).onTrue(new PathfindAndFollow(m_drive, m_selector));
 
   //Controller 2
    //Pov up
