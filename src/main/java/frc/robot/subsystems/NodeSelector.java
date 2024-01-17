@@ -4,7 +4,10 @@
 
 package frc.robot.subsystems;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
+
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Joystick;
@@ -12,38 +15,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class NodeSelector extends SubsystemBase {
   /** Creates a new NodeSelector. */
-  private int currentSelectionNodes;
-  private int currentSelectionLevels;
-  private ArrayList<String> nodeNames = new ArrayList<String>();
-  private ArrayList<String> scoringLevels = new ArrayList<String>();
-  private String level;
+  private int currentSelection;
+  private ArrayList<String> pointsOfInterest = new ArrayList<String>();
   Joystick joy;
 
-  public static Pose2d nodeToAlign = new Pose2d();
-
-  public static String levelToShoot = new String();
+  public static PathPlannerPath povToAlign;
 
   public NodeSelector(Joystick joy) {
     this.joy = joy;
-    this.level = levelToShoot;
-    this.currentSelectionNodes = 0;
-    this.currentSelectionLevels = 2;
+    this.currentSelection = 0;
 
-    nodeNames.add("Node 1 Cone");
-    nodeNames.add("Node 2 Cube");
-    nodeNames.add("Node 3 Cone");
-    nodeNames.add("Node 4 Cone");
-    nodeNames.add("Node 5 Cube");
-    nodeNames.add("Node 6 Cone");
-    nodeNames.add("Node 7 Cone");
-    nodeNames.add("Node 8 Cube");
-    nodeNames.add("Node 9 Cone");
-
-    scoringLevels.add("Low");
-    scoringLevels.add("Mid");
-    scoringLevels.add("High");
-    scoringLevels.add("Ave Maria");
-
+    pointsOfInterest.add("Speaker Orbit Align");
+    pointsOfInterest.add("Amp Align");
+    pointsOfInterest.add("Source Align");
+    pointsOfInterest.add("Left Stage Align");
+    pointsOfInterest.add("Center Stage Align");
+    pointsOfInterest.add("Right Stage Align");
   }
 
   @Override
@@ -56,9 +43,9 @@ public class NodeSelector extends SubsystemBase {
     int pov = joy.getPOV();
 
     if(pov == 0){
-      currentSelectionLevels++;
-      if(currentSelectionLevels >= scoringLevels.size()){
-        currentSelectionLevels = 0;
+      currentSelection++;
+      if(currentSelection >= pointsOfInterest.size()){
+        currentSelection = 0;
       }
     }  
   }
@@ -67,23 +54,23 @@ public class NodeSelector extends SubsystemBase {
     int pov = joy.getPOV();
 
     if(pov == 180){
-      currentSelectionLevels--;
-      if(currentSelectionLevels < 0){
-        currentSelectionLevels = scoringLevels.size() - 1;
+      currentSelection--;
+      if(currentSelection < 0){
+        currentSelection = pointsOfInterest.size() - 1;
       }
     }  
   }
 
   public void displaySelection(){
     
-    String currentKeyLevels = scoringLevels.get(currentSelectionLevels);
+    String currentKeyLevels = pointsOfInterest.get(currentSelection);
 
     if (currentKeyLevels != null) {
       // Get the string representation of the selected entry
   
       // Display the selected entry on the SmartDashboard
-      SmartDashboard.putString("Selected Level", currentKeyLevels);
-      levelToShoot = level;
+      SmartDashboard.putString("Selected POV", currentKeyLevels);
+      povToAlign = PathPlannerPath.fromPathFile(currentKeyLevels);
 
       //nodeToAlign = pose_map.get(currentKeyNodes);
     } else {
@@ -92,25 +79,16 @@ public class NodeSelector extends SubsystemBase {
     }
   }
 
-  public Pose2d getNodeToAlign(){
-    return nodeToAlign;
+  public PathPlannerPath getPOVToAlign(){
+    return povToAlign;
   }
 
   public String getAlignName(){
-    String currentKey = nodeNames.get(currentSelectionNodes);
+    String currentKey = pointsOfInterest.get(currentSelection);
     return currentKey;
   }
 
-  public String getLevelName(){
-    String currentKey = scoringLevels.get(currentSelectionLevels);
-    return currentKey;
-  }
-
-  public void selectNode(int node){
-    currentSelectionNodes = node;
-  }
-
-  public void selectLevel(int level){
-    currentSelectionLevels = level;
+  public void selectPOV(int pov){
+    currentSelection = pov;
   }
 }

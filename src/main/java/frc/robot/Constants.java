@@ -196,20 +196,24 @@ public final class Constants {
 
   }
 
-  public static final class FieldConstants{
+  public static final class AutoConstants {
+    public static double MAX_SpeedMtS = 3.0;
+    public static double MAX_AccelerationMtS = 3.0;
+    public static double MAX_AngularSpeedDegS = 540.0;
+    public static double MAX_AngularAccelerationDegS = 720.0;
+  }
+
+  public static final class FieldConstants {
     public static final double fieldLength = 16.54175;
     public static final double fieldWidth = 8.0137;
 
     public static final Map<String, Pose2d> BLUE_MAP = Map.ofEntries(
-            Map.entry("Node 1 Cone", new Pose2d(new Translation2d(1.83, 0.42), Rotation2d.fromDegrees(180))),
-            Map.entry("Node 2 Cube", new Pose2d(new Translation2d(1.83, 1.06), Rotation2d.fromDegrees(180))),
-            Map.entry("Node 3 Cone", new Pose2d(new Translation2d(1.83, 1.59), Rotation2d.fromDegrees(180))),
-            Map.entry("Node 4 Cone", new Pose2d(new Translation2d(1.83, 2.19), Rotation2d.fromDegrees(180))),
-            Map.entry("Node 5 Cube", new Pose2d(new Translation2d(1.83, 2.75), Rotation2d.fromDegrees(180))),
-            Map.entry("Node 6 Cone", new Pose2d(new Translation2d(1.83, 3.31), Rotation2d.fromDegrees(180))),
-            Map.entry("Node 7 Cone", new Pose2d(new Translation2d(1.83, 3.86), Rotation2d.fromDegrees(180))),
-            Map.entry("Node 8 Cube", new Pose2d(new Translation2d(1.83, 4.42), Rotation2d.fromDegrees(180))),
-            Map.entry("Node 9 Cone", new Pose2d(new Translation2d(1.83, 4.99), Rotation2d.fromDegrees(180)))
+            Map.entry("Speaker Orbit", new Pose2d(new Translation2d(2.36, 5.51), Rotation2d.fromDegrees(180.0))),
+            Map.entry("Amp", new Pose2d(new Translation2d(1.81, 7.57), Rotation2d.fromDegrees(0.0))),
+            Map.entry("Left Stage", new Pose2d(new Translation2d(4.02, 5.18), Rotation2d.fromDegrees(-57.0))),
+            Map.entry("Center Stage", new Pose2d(new Translation2d(6.30, 4.18), Rotation2d.fromDegrees(180.0))),
+            Map.entry("Right Stage", new Pose2d(new Translation2d(4.20, 2.89), Rotation2d.fromDegrees(57.0))),
+            Map.entry("Source", new Pose2d(new Translation2d(15.29, 1.43), Rotation2d.fromDegrees(-57.0)))
           );
 
           private static final Map<String, Pose2d> RED_MAP =

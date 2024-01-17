@@ -3,6 +3,7 @@
   "robotLength": 0.81,
   "holonomicMode": true,
   "pathFolders": [
+    "Pre-Defined Paths",
     "PID Tuning"
   ],
   "autoFolders": [

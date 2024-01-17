@@ -48,24 +48,6 @@ public class AlignToNode extends Command {
   @Override
   public void initialize() {
     angularController.reset();
-
-    switch(m_selector.getLevelName()){
-      case "Low": 
-       LimelightHelpers.setPipelineIndex(VisionConstants.tagLimelightName, VisionConstants.lowAlign_Pipeline);
-      break;
-
-      case "Mid":
-       LimelightHelpers.setPipelineIndex(VisionConstants.tagLimelightName, VisionConstants.midAlign_Pipeline);
-      break;
-
-      case "High":
-       LimelightHelpers.setPipelineIndex(VisionConstants.tagLimelightName, VisionConstants.highAlign_Pipeline);
-      break;
-
-      case "Ave Maria":
-       LimelightHelpers.setPipelineIndex(VisionConstants.tagLimelightName, VisionConstants.normalTracking_Pipeline);
-      break;
-    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
