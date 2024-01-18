@@ -97,6 +97,8 @@ public class DriveTrain extends SubsystemBase {
 
     SmartDashboard.putNumber("Average Drive Speed", getAverageDriveSpeed());
 
+    SmartDashboard.putNumber("Angular Acceleration", getAngularAcceleration());
+
     encoderOdo.update(getRotation2d(), getModulePositions());
 
     /*for(SwerveModule mod : swerveModules){
@@ -160,14 +162,14 @@ public class DriveTrain extends SubsystemBase {
     double sumVelocities = 0.0;
 
     for(SwerveModule mod : swerveModules){
-      sumVelocities += mod.getDriveVelocity();
+      sumVelocities += Math.abs(mod.getDriveVelocity());
     }
 
     return sumVelocities / swerveModules.length;
   }
 
   public double getAngularAcceleration(){
-    return imu.getAccelerationZ().getValueAsDouble();
+    return imu.getAngularVelocityZWorld().getValueAsDouble();
   }
 
   public SwerveModulePosition[] getModulePositions(){

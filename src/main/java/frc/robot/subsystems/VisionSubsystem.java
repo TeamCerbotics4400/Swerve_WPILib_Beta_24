@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.MatBuilder;
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.Debouncer;
@@ -12,6 +13,8 @@ import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -139,12 +142,13 @@ public class VisionSubsystem {
       stdsDevXY = 0.1;
       stdsDevDeg = 0.1;
     } else {
-      stdsDevXY = m_drive.getAverageDriveSpeed();
-      stdsDevDeg = m_drive.getAngularAcceleration();
+      stdsDevXY = Math.abs(m_drive.getAverageDriveSpeed());
+      stdsDevDeg = Math.abs(m_drive.getAngularAcceleration()) / 200;
     }
 
-    m_poseEstimator.setVisionMeasurementStdDevs(
-                        new MatBuilder<>(Nat.N3(), Nat.N1()).fill(stdsDevXY, stdsDevXY, stdsDevDeg));
+    Matrix<N3, N1> visionMat = MatBuilder.fill(Nat.N3(), Nat.N1(), stdsDevXY, stdsDevXY, stdsDevDeg);
+
+    m_poseEstimator.setVisionMeasurementStdDevs(visionMat);
   }
 
   public int getNumofDetectedTargets(){

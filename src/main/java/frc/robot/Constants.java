@@ -161,7 +161,7 @@ public final class Constants {
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
     public static final double kTeleDriveMaxSpeedMetersPerSecond = 
-                kPhysicalMaxSpeedMetersPerSecond / 2;//* 0.80; //TODO: TeleOp drive speed
+                kPhysicalMaxSpeedMetersPerSecond / 4;//* 0.80; //TODO: TeleOp drive speed
     public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = 
                 kPhysicalMaxAngularSpeedRadiansPerSecond / 3; //TODO: TeleOp angle speed
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
