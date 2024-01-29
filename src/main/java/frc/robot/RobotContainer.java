@@ -4,9 +4,13 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -31,11 +35,28 @@ public class RobotContainer {
   private final Joystick chassisDriver = new Joystick(0);
   private final Joystick subsystemsDriver = new Joystick(1);
 
+  private final Field2d pathplannerField;
+
   private final NodeSelector m_selector = new NodeSelector(subsystemsDriver);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+
+    pathplannerField = new Field2d();
+    SmartDashboard.putData("Pathplanner field", pathplannerField);
+
+    PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {
+      pathplannerField.setRobotPose(pose);
+    });
+
+    PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
+      pathplannerField.getObject("target pose").setPose(pose);
+    });
+
+    PathPlannerLogging.setLogActivePathCallback((poses) -> {
+      pathplannerField.getObject("path").setPoses(poses);
+    });
 
     m_drive.setDefaultCommand(new TeleopControl
     (m_drive, 
@@ -68,11 +89,6 @@ public class RobotContainer {
 
    //Pov down
    new POVButton(subsystemsDriver, 180).onTrue(new InstantCommand(() -> m_selector.updateSelectionDown()));
-
-   /**********  DEBUGGING  **********/
-   //new JoystickButton(chassisDriver, 1).whileTrue(new DebugShooterCommand(m_shooter));
-
-   //new JoystickButton(chassisDriver, 2).whileTrue(new PIDModuleTuner(m_drive));
   }
 
   /**
@@ -82,7 +98,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new PathPlannerAuto("ThreePiece");
+    return null;
   }
 
   public DriveTrain getDrive(){
